@@ -45,6 +45,7 @@ print_status "ran 'znode genkey', and 'getaccountaddress ZNX'"
 print_status "Add the following info to the znode config file (znode.conf) "
 print_status "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
 print_status "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 0"
+print_status "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
 print_status "save your znode.conf. Restart your Zcoin wallet"
 
 #read -e -p "Server IP Address : " ip
@@ -189,6 +190,7 @@ EOF
 
 #monit setting
 	cat <<EOF > /etc/monit/monitrc
+cat <<EOF > /etc/monit/monitrc
 #
 set daemon 120
 #
@@ -202,8 +204,7 @@ set eventqueue
 basedir /var/lib/monit/events # set the base directory where events will be stored
 slots 100                     # optionally limit the queue size
 #
-set httpd port 2812 and
-use address localhost  # only accept connection from localhost
+set httpd port 2812 and use address localhost  # only accept connection from localhost
 allow localhost        # allow localhost to connect to the server and
 allow admin:monit      # require user 'admin' with password 'monit'
 #
