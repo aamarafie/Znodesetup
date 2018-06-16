@@ -28,9 +28,9 @@ Login the VPS as root to create a user
 adduser <username>
 usermod -aG sudo <username>
 ```
-Login into the new created user 
+Login into the new created user
 ```
-Wget https://github.com/aamarafie/Znodesetup/blob/master/znsetup.sh
+wget https://github.com/aamarafie/Znodesetup/blob/master/znsetup.sh
 sudo chmod u+x znsetup.sh
 ./znsetup.sh
 ```
