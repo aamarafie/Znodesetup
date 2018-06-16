@@ -1,18 +1,18 @@
 ## **The Script automatically installs and sets up a Znode on VPS**
 
-* Installs Fail2Ban optional
-* Installs Firewall optional
-* Installs & configures MONIT optional (to monitor and keep Znode alive)
+* Installs Fail2Ban (optional)
+* Installs Firewall (optional)
+* Installs & configures MONIT (optional to monitor and keep Znode alive)
 * Creates swap if less than 4GB memory
 * Updates VPS
-* Downloads all dependencies and github / builds Zcoin
+* Downloads all dependencies and github / builds Zcoin<br/>
   _Note: Compiling does take a while vs downloading the binary_
 
 
 ## **Please README before you Install**
 ### **Run as a normal user with sudo privilege**
 
-I have created this simple script to complement the Znode [setup guide] (https://zcoin.io/zcoin-znode-setup-guide/) and automatically install on VPS with all the required bells and whistles. <br/>
+I have created this simple script to complement the [Znode Setup Guide](https://zcoin.io/zcoin-znode-setup-guide/) and automatically install on VPS with all the required bells and whistles. <br/>
 
 Once you send your 1000 Zcoins to the Znode address you can run this script on the VPS and it should take care of all the requirements. **All you need is to have is your _Znode Private key_ ready when it prompts for it <br/>**
 **(generated from "_znode genkey_" command in Help> Debug Window)<br/>**
