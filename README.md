@@ -1,4 +1,4 @@
-## **The Script automatically installs and sets up a Znode on VPS**
+## **The Script automatically installs and configures a Znode on VPS**
 
 * Installs Fail2Ban (optional)
 * Installs Firewall (optional)
