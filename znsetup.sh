@@ -27,7 +27,7 @@ print_status() {
 if [[ $1 == "-update" ]]
 then
 	update_znode
-fi 
+fi
 
 if [[ $1 == "-s" ]]
 then
@@ -174,14 +174,14 @@ if [ $install_monit == "y" ] || [ $install_monit == "Y" ]
 then
     print_status "installing and configuring MONIT"
     sudo apt install monit
-	
+
 #monit config for process to monitor
-	cat <<EOF > $HOME/.zcoin/zcoin.conf
+cat <<EOF > $HOME/.zcoin/zcoin.conf
 #
 check process zcoind with pidfile $HOME/.zcoin/zcoind.pid
-start program = "$HOME/zcoin/src/zcoind" -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/" 
+start program = "$HOME/zcoin/src/zcoind" -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
 as uid $USER and gid $USER
-stop program = "$HOME/zcoin/src/zcoin-cli stop
+stop program = "$HOME/zcoin/src/zcoin-cli stop"
 as uid $USER and gid $USER
 if failed port 8168 then restart
 if 5 restarts within 5 cycles then unmonitor
