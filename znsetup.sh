@@ -40,9 +40,13 @@ fi
 clear
 if pgrep -x "zcoind" > /dev/null
 then
-	echo "Znode is Insalled and Running, Fat Finger!"
+	echo "*** Znode is Insalled and Running, Fat Finger! ***"
 	echo "to update type ./znsetup.sh -update"
 	echo "to check on node status type ./znsetup.sh -s"
+	echo "**************************************************************************************"
+  echo "If you want to install using this script , then stop the daemon and remove znode files"
+	echo "start a fresh install using ./znsetup.sh , you wont loose your Znode status"
+	echo "your Znode will be up and running in no time just let the script takeover"
 	exit
 fi
 
