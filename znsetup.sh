@@ -44,7 +44,6 @@ print_status "1000XZC sent to ZN address, It has to be in one single transaction
 print_status "ran 'znode genkey', and 'getaccountaddress ZNX'"
 print_status "Add the following info to the znode config file (znode.conf) "
 print_status "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
-print_status "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 0"
 print_status "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
 print_status "save your znode.conf. Restart your Zcoin wallet"
 
@@ -189,7 +188,6 @@ if 5 restarts within 5 cycles then unmonitor
 EOF
 
 #monit setting
-	cat <<EOF > /etc/monit/monitrc
 cat <<EOF > /etc/monit/monitrc
 #
 set daemon 120
