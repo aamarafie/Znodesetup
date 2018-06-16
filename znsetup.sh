@@ -217,5 +217,6 @@ include /etc/monit/conf.d/*
 EOF
 	sudo monit reload
 	sudo monit start all
-fi
+
+
 clear
