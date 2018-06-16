@@ -1,16 +1,16 @@
 ## **The Script automatically installs and sets up a Znode on VPS**
 
--Installs Fail2Ban optional
+* Installs Fail2Ban optional
 -
--Installs Firewall optional
+* Installs Firewall optional
 -
--Installs & configures MONIT optional (to monitor and keep Znode alive)
+* Installs & configures MONIT optional (to monitor and keep Znode alive)
 -
--Creates swap if less than 4GB memory
+* Creates swap if less than 4GB memory
 -
--Updates VPS
+* Updates VPS
 -
--Downloads all dependencies and github / builds Zcoin
+* Downloads all dependencies and github / builds Zcoin
 -
 _Note: Compiling does take a while vs downloading the binary_
 
