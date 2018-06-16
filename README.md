@@ -30,16 +30,16 @@ usermod -aG sudo <username>
 ```
 Login into the new created user
 ```
-wget https://github.com/aamarafie/Znodesetup/blob/master/znsetup.sh
+wget https://raw.githubusercontent.com/aamarafie/Znodesetup/master/znsetup.sh
 sudo chmod u+x znsetup.sh
 ./znsetup.sh
 ```
 ### **In the future to update your Znode simply**
 ```
-./znsetup.sh –update
+./znsetup.sh -update
 ```
 
 ### **To see the status, version and sync status of your Znode**
 ```
-./znsetup.sh –s
+./znsetup.sh -s
 ```
