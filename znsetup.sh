@@ -37,6 +37,7 @@ then
 	exit
 fi
 
+clear
 if pgrep -x "zcoind" > /dev/null
 then
 	echo "Znode is Insalled and Running, Fat Finger!"
@@ -45,7 +46,6 @@ then
 	exit
 fi
 
-clear
 print_status "Before starting script ensure you have: "
 print_status "1000XZC sent to ZN address, It has to be in one single transaction!"
 print_status "ran 'znode genkey', and 'getaccountaddress ZNX'"
