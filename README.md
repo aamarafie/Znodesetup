@@ -23,6 +23,12 @@ aBJFCE2XaExDZAdd1vuek9GkFCNtmF7nao
 
 
 ### **First time Instructions**
+Login the VPS as root to create a user
+```
+adduser <username>
+usermod -aG sudo <username>
+```
+Login into the new created user 
 ```
 Wget https://github.com/aamarafie/Znodesetup/blob/master/znsetup.sh
 sudo chmod u+x znsetup.sh
