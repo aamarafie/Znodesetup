@@ -37,6 +37,13 @@ then
 	exit
 fi
 
+if pgrep -x "zcoind" > /dev/null
+then
+	echo "Znode is Insalled and Running, Fat Finger!"
+	echo "to update type ./znsetup.sh -update"
+	echo "to check on node status type ./znsetup.sh -s"
+	exit
+fi
 
 clear
 print_status "Before starting script ensure you have: "
