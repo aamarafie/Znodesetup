@@ -11,6 +11,11 @@ update_znode() {
 	./configure
 	make -j$BUILD_CORES
 	sudo make install
+	sudo cp $HOME/zcoin/src/zcoind /usr/local/bin/zcoind                    #incase make install fails (error occuring in 0.13.6.4 )
+  sudo cp $HOME/zcoin/src/zcoin-cli /usr/local/bin/zcoin-cli              #incase make install fails
+  sudo cp $HOME/zcoin/src/zcoin-tx /usr/local/bin/zcoin-tx
+	print_status "Starting Zcoin daemon & Monit"
+	sleep 5
 	zcoind -daemon
 	sudo monit start all
 	exit
