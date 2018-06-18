@@ -8,6 +8,7 @@
 * Updates VPS
 * Downloads all dependencies and github / builds Zcoin<br/>
   _Note: Compiling does take a while vs downloading the binary_
+  _Update: Added manual bin installing since make install was broken in x.4"_
 
 
 ## **Please README before you Install**
