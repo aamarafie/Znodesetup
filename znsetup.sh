@@ -107,13 +107,18 @@ clear
 print_status "Installing dependencies"
 sleep 5
 
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get install software-properties-common -y
+sudo add-apt-repository ppa:bitcoin/bitcoin -y
 sudo apt-get update
-sudo apt-get install libdb4.8-dev libdb4.8++-dev
+sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 sudo apt-get install libminiupnpc-dev libzmq3-dev
 sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
 
+clear
+print_status "Installing QT 5"
+sleep 5
+sudo apt-get install libminiupnpc-dev libzmq3-dev
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
 
 clear
 print_status "Cloning zcoin"
@@ -138,7 +143,9 @@ BUILD_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
 print_status "Compiling from source with $BUILD_CORES core(s)"
 make -j$BUILD_CORES
 clear
-print_status "Installing zcoin and zcoin-cli binaries."
+print_status "Make Checking..."
+make check
+print_status "Installing zcoind and zcoin-cli binaries."
 sudo make install
 clear
 
@@ -206,7 +213,7 @@ if 5 restarts within 5 cycles then unmonitor
 EOF
 
 #monit setting
-sudo cat <<EOF | sudo tee /etc/monit/monitrc
+cat <<EOF | sudo tee /etc/monit/monitrc
 #
 set daemon 120
 #
