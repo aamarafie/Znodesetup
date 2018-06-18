@@ -148,9 +148,9 @@ print_status "Make Checking..."
 make check
 print_status "Installing zcoin and zcoin-cli binaries."
 sudo make install
-sudo cp $HOME/zcoin/src/zcoind 				#incase make install fails (error occuring in 0.13.6.4 )
-sudo cp $HOME/zcoin/src/zcoin-cli			#incase make install fails
-sudo cp $HOME/zcoin/src/zcoin-tx
+sudo cp $HOME/zcoin/src/zcoind 	/usr/local/bin/zcoind			#incase make install fails (error occuring in 0.13.6.4 )
+sudo cp $HOME/zcoin/src/zcoin-cli	/usr/local/bin/zcoin-cli		#incase make install fails
+sudo cp $HOME/zcoin/src/zcoin-tx /usr/local/bin/zcoin-tx
 clear
 
 #znode config file
