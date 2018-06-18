@@ -7,7 +7,7 @@
 * Creates swap if less than 4GB memory
 * Updates VPS
 * Downloads all dependencies and github / builds Zcoin<br/>
-  _Note: Compiling does take a while vs downloading the binary_
+  _Note: Compiling does take a while vs downloading the binary_<br/>
   _Update: Added manual bin installing since make install was broken in x.4"_
 
 
