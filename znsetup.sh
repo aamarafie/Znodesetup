@@ -98,22 +98,29 @@ print_status "Updating system"
 sleep 5
 
 # update package and upgrade Ubuntu
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y update
-sudo DEBIAN_FRONTEND=noninteractive apt-get upgrade -y
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y autoremove
-sudo apt-get install git -y
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev
+
 
 clear
 print_status "Installing dependencies"
 sleep 5
 
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:bitcoin/bitcoin
+sudo apt-get update
+sudo apt-get install libdb4.8-dev libdb4.8++-dev
+sudo apt-get install libminiupnpc-dev libzmq3-dev
+sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
+
+
+clear
+print_status "Cloning zcoin"
+sleep 5
+
 git clone https://github.com/zcoinofficial/zcoin.git
 cd zcoin
-sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libminiupnpc-dev -y
-sudo apt-get install software-properties-common -y
-sudo add-apt-repository ppa:bitcoin/bitcoin -y
-sudo apt-get update
-sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
 
 clear
 print_status "Building zcoin.. this will take a while"
@@ -199,7 +206,7 @@ if 5 restarts within 5 cycles then unmonitor
 EOF
 
 #monit setting
-cat <<EOF > /etc/monit/monitrc
+sudo cat <<EOF | sudo tee /etc/monit/monitrc
 #
 set daemon 120
 #
@@ -213,14 +220,19 @@ set eventqueue
 basedir /var/lib/monit/events # set the base directory where events will be stored
 slots 100                     # optionally limit the queue size
 #
-set httpd port 2812 and use address localhost  # only accept connection from localhost
-allow localhost        # allow localhost to connect to the server and
-allow admin:monit      # require user 'admin' with password 'monit'
+set httpd port 2812 and
+    use address localhost  # only accept connection from localhost
+    allow localhost        # allow localhost to connect to the server and
+    allow admin:monit      # require user 'admin' with password 'monit'
 #
 include /etc/monit/conf.d/*
 EOF
+
 	sudo monit reload
 	sudo monit start all
-
+fi
 
 clear
+
+print_status "Feeling appreciative & generous, show some love by sending Zcoins my way"
+print_status "aBJFCE2XaExDZAdd1vuek9GkFCNtmF7nao"
