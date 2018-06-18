@@ -234,6 +234,7 @@ set httpd port 2812 and
     allow admin:monit      # require user 'admin' with password 'monit'
 #
 include /etc/monit/conf.d/*
+#
 EOF
 
 	sudo monit reload
