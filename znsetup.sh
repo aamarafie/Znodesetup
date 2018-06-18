@@ -208,9 +208,8 @@ then
 
 #monit config for process to monitor
 cat <<EOF | sudo tee /etc/monit/conf.d/zcoind.conf
-#
 check process zcoind with pidfile $HOME/.zcoin/zcoind.pid
-start program = "$HOME/zcoin/src/zcoind" -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
+start program = "$HOME/zcoin/src/zcoind -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
 as uid $USER and gid $USER
 stop program = "$HOME/zcoin/src/zcoin-cli stop"
 as uid $USER and gid $USER
