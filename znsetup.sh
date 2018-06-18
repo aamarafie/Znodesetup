@@ -146,11 +146,12 @@ make -j$BUILD_CORES
 clear
 print_status "Make Checking..."
 make check
-print_status "Installing zcoind and zcoin-cli binaries."
+print_status "Installing zcoin and zcoin-cli binaries."
 sudo make install
 clear
 
 #znode config file
+mkdir $HOME/.zcoin
 cat <<EOF > $HOME/.zcoin/zcoin.conf
 #
 rpcuser=user
@@ -202,7 +203,7 @@ then
     sudo apt install monit
 
 #monit config for process to monitor
-cat <<EOF > $HOME/.zcoin/zcoin.conf
+cat <<EOF | sudo tee /etc/monit/conf.d/zcoind.conf
 #
 check process zcoind with pidfile $HOME/.zcoin/zcoind.pid
 start program = "$HOME/zcoin/src/zcoind" -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
