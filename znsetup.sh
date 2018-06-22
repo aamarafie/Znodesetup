@@ -10,7 +10,7 @@ update_znode() {
 	./autogen.sh
 	./configure
 	make -j$BUILD_CORES
-	sudo make install
+	sudo make check
 	sudo cp $HOME/zcoin/src/zcoind /usr/local/bin/zcoind                    #incase make install fails (error occuring in 0.13.6.4 )
   sudo cp $HOME/zcoin/src/zcoin-cli /usr/local/bin/zcoin-cli              #incase make install fails
   sudo cp $HOME/zcoin/src/zcoin-tx /usr/local/bin/zcoin-tx
@@ -152,10 +152,8 @@ clear
 print_status "Make Checking..."
 make check
 print_status "Installing zcoin and zcoin-cli binaries."
-sudo make install
-print_status "Copying bins, error on make file!"
-sudo cp $HOME/zcoin/src/zcoind /usr/local/bin/zcoind                    #incase make install fails (error occuring in 0.13.6.4 )
-sudo cp $HOME/zcoin/src/zcoin-cli /usr/local/bin/zcoin-cli              #incase make install fails
+sudo cp $HOME/zcoin/src/zcoind /usr/local/bin/zcoind                    
+sudo cp $HOME/zcoin/src/zcoin-cli /usr/local/bin/zcoin-cli
 sudo cp $HOME/zcoin/src/zcoin-tx /usr/local/bin/zcoin-tx
 clear
 
