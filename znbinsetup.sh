@@ -33,7 +33,7 @@ then
 fi
 
 
-if [[ $1 =="-f"]]
+if [[ $1 == "-f" ]]
 then
   print_status "Before starting script ensure you have: "
   print_status "1000XZC sent to ZN address, It has to be in one single transaction!"
@@ -115,8 +115,7 @@ sleep 5
 zcoind -daemon
 
 clear
-exit
-fi
+
 
 if [ $install_fail2ban == "y" ] || [ $install_fail2ban == "Y" ]
 then
@@ -180,6 +179,7 @@ EOF
 	sudo monit start all
 fi
 
+fi
 clear
 
 print_status "Feeling appreciative & generous, show some love by sending Zcoins my way"
