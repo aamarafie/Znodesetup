@@ -1,35 +1,18 @@
 #!/bin/bash
-
-update_znode() {
-	BUILD_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
-	cd $HOME/zcoin
-	sudo monit stop all
-	zcoin-cli stop
-	git checkout master
-	git pull
-	./autogen.sh
-	./configure
-	make -j$BUILD_CORES
-	sudo make install
-	print_status "Starting Zcoin daemon & Monit"
-	sleep 5
-	zcoind -daemon
-	sudo monit start all
-	exit
-}
-
-pause(){
-	read -n1 -rsp $'Press any key to continue or Ctrl+C to exit...\n'
-}
-
-print_status() {
-    echo "## $1"
-}
-
-if [[ $1 == "-update" ]]
-then
-	update_znode
+install_bins(){
+wget https://github.com/zcoinofficial/zcoin/releases/download/$2
+if [ -d "zcoin" ]; then
+  sudo monit stop all
+  zcoin-cli stop
+  rm -rv zcoin
 fi
+mkdir zcoin
+tar -xvf $1 -C $HOME/zcoin --strip-components=1
+sudo cp $HOME/zcoin/bin/zcoind /usr/local/bin/zcoind
+sudo cp $HOME/zcoin/bin/zcoin-cli /usr/local/bin/zcoin-cli
+sudo cp $HOME/zcoin/bin/zcoin-tx /usr/local/bin/zcoin-tx
+}
+
 
 if [[ $1 == "-s" ]]
 then
@@ -39,18 +22,18 @@ then
 	exit
 fi
 
-clear
-if pgrep -x "zcoind" > /dev/null
+if [[ $1 == "-u" ]]
 then
-	echo "*** Znode is Insalled and Running, Fat Finger! ***"
-	echo "to update type ./znsetup.sh -update"
-	echo "to check on node status type ./znsetup.sh -s"
-	echo "**************************************************************************************"
-  echo "If you want to install using this script , then stop the daemon and remove znode files"
-	echo "start a fresh install using ./znsetup.sh , you wont loose your Znode status"
-	echo "your Znode will be up and running in no time just let the script takeover"
-	exit
+  install_bins
+  print_status "Starting Zcoin daemon & Monit"
+  sleep 5
+  zcoind -daemon
+  sudo monit start all
+  exit
 fi
+
+
+if [[ $1 =="-f"]]
 
 print_status "Before starting script ensure you have: "
 print_status "1000XZC sent to ZN address, It has to be in one single transaction!"
@@ -102,57 +85,8 @@ sleep 5
 # update package and upgrade Ubuntu
 sudo apt-get update -y
 sudo apt-get upgrade -y
-sudo apt-get install git -y
 
-
-clear
-print_status "Installing dependencies"
-sleep 5
-
-sudo apt-get install build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev -y
-sudo apt-get install software-properties-common -y
-sudo add-apt-repository ppa:bitcoin/bitcoin -y
-sudo apt-get update
-sudo apt-get install libdb4.8-dev libdb4.8++-dev -y
-sudo apt-get install libminiupnpc-dev libzmq3-dev -y
-sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev -y
-
-clear
-print_status "Installing QT 5"
-sleep 5
-sudo apt-get install libminiupnpc-dev libzmq3-dev
-sudo apt-get install libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev
-
-clear
-print_status "Cloning zcoin"
-sleep 5
-
-git clone https://github.com/zcoinofficial/zcoin.git
-cd zcoin
-
-clear
-print_status "Building zcoin.. this will take a while"
-sleep 5
-./autogen.sh
-clear
-print_status "building in progress..."
-sleep 5
-./configure
-clear
-print_status "Final stage...almost there"
-sleep 5
-# if more cores
-BUILD_CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
-print_status "Compiling from source with $BUILD_CORES core(s)"
-make -j$BUILD_CORES
-clear
-print_status "Make Installing..."
-make install
-print_status "Installing zcoin and zcoin-cli binaries."
-sudo cp $HOME/zcoin/src/zcoind /usr/local/bin/zcoind
-sudo cp $HOME/zcoin/src/zcoin-cli /usr/local/bin/zcoin-cli
-sudo cp $HOME/zcoin/src/zcoin-tx /usr/local/bin/zcoin-tx
-clear
+install_bins
 
 #znode config file
 mkdir $HOME/.zcoin
