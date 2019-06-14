@@ -87,8 +87,10 @@ echo "Updating Ubunto"
 sleep 5
 
 # update package and upgrade Ubuntu
-sudo apt-get update -y
-sudo apt-get upgrade -y
+sudo DEBIAN_FRONTEND=noninteractive apt -y update
+sudo DEBIAN_FRONTEND=noninteractive apt -y upgrade
+sudo DEBIAN_FRONTEND=noninteractive apt -y autoremove
+
 
 echo "installing Zcoin..."
 install_bins
