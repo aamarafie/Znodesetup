@@ -1,7 +1,7 @@
 #!/bin/bash
 install_bins(){
 
-filelink = "$2"
+filelink=$2
 wget $filelink
 if [ -d "zcoin" ]; then
   sudo monit stop all
