@@ -185,8 +185,6 @@ sudo monit status
 sudo monit start all
 
 fi
-
-
 fi
 
 echo "Feeling appreciative & generous, show some love by sending Zcoins my way"
