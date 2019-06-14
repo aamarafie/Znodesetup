@@ -118,14 +118,14 @@ externalip=$ip:8168
 EOF
 
 
-if [ "$install_fail2ban" = "y" ] || [ "$install_fail2ban" = "Y" ] || [ "$install_fail2ban" = "" ]
+if [ "$install_fail2ban" = "y" ] || [ "$install_fail2ban" = "Y" ] || [ "$install_fail2ban" = "" ];
 then
     echo "installing f2b"
     sudo apt-get install fail2ban -y
     sudo service fail2ban restart
 fi
 
-if [ "$UFW" = "y" ] || [ "$UFW" = "Y" ] || [ "$UFW" = "" ]
+if [ "$UFW" = "y" ] || [ "$UFW" = "Y" ] || [ "$UFW" = "" ];
 then
     echo "installing UFW"
     sudo apt-get install ufw -y
@@ -136,7 +136,7 @@ then
     yes | sudo ufw enable
 fi
 
-if [ "$install_monit" = "y" ] || [ "$install_monit" = "Y" ] || [ "$install_monit" = "" ]
+if [ "$install_monit" = "y" ] || [ "$install_monit" = "Y" ] || [ "$install_monit" = "" ];
 then
     echo "installing and configuring MONIT"
     sudo apt install monit
@@ -176,9 +176,13 @@ include /etc/monit/conf.d/*
 #
 EOF
 
-	sudo monit reload
-	sudo monit start all
+sudo monit reload
+sudo monit status
+sudo monit start all
+
 fi
+
+
 
 
 echo "Starting zcoind"
