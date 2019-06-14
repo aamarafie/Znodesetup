@@ -117,6 +117,10 @@ znodeprivkey=$key
 externalip=$ip:8168
 EOF
 
+echo "Starting zcoind"
+sleep 5
+
+zcoind -daemon
 
 if [ "$install_fail2ban" = "y" ] || [ "$install_fail2ban" = "Y" ] || [ "$install_fail2ban" = "" ];
 then
@@ -183,12 +187,6 @@ sudo monit start all
 fi
 
 
-
-
-echo "Starting zcoind"
-sleep 5
-
-zcoind -daemon
 fi
 
 echo "Feeling appreciative & generous, show some love by sending Zcoins my way"
