@@ -1,17 +1,4 @@
 #!/bin/bash
-if pgrep -x "zcoind" > /dev/null
-then
-	echo "*** Znode is Insalled and Running, Fat Finger! ***"
-	echo "to update type ./znbinsetup.sh -u <zcoin tar file link>"
-	echo "to check on node status type ./znbinsetup.sh -s"
-	echo "**************************************************************************************"
-  echo "If you want to install using this script , then stop the daemon and remove znode files"
-  echo "./znbinsetup.sh -clean"
-	echo "start a fresh install using ./znbinsetup.sh -f <zcoin tar file link>, you wont loose your Znode status"
-	echo "your Znode will be up and running in no time just let the script takeover"
-	exit
-fi
-
 install_bins(){
 wget $filelink
 ttt="$(basename -- $filelink)"
@@ -60,6 +47,20 @@ fi
 
 if [[ $1 == "-f" ]]
 then
+
+if pgrep -x "zcoind" > /dev/null
+then
+	echo "*** Znode is Insalled and Running, Fat Finger! ***"
+	echo "to update type ./znbinsetup.sh -u <zcoin tar file link>"
+	echo "to check on node status type ./znbinsetup.sh -s"
+	echo "**************************************************************************************"
+  echo "If you want to install using this script , then stop the daemon and remove znode files"
+  echo "./znbinsetup.sh -clean"
+	echo "start a fresh install using ./znbinsetup.sh -f <zcoin tar file link>, you wont loose your Znode status"
+	echo "your Znode will be up and running in no time just let the script takeover"
+	exit
+fi
+
 echo "Before starting script ensure you have: "
 echo "1000XZC sent to ZN address, It has to be in one single transaction!"
 echo "ran 'znode genkey', and 'getaccountaddress ZNX'"
