@@ -18,7 +18,11 @@ rm $ttt
 if [[ $1 == "-clean" ]]
 then
 sudo monit stop all
-zcoin-cli stop
+  if pgrep -x "zcoind" > /dev/null
+  then
+  pidno=pgrep -x "zcoind"
+  kill $pidno
+  fi
 sudo rm $HOME/.zcoin/zcoin.conf
 sudo rm /etc/monit/conf.d/zcoind.conf
 rm -rv zcoin
