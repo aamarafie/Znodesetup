@@ -1,17 +1,14 @@
 #!/bin/bash
 install_bins(){
-
-filelink=$2
 wget $filelink
-f="$(basename -- $filelink)"
-
+ttt="$(basename -- $filelink)"
 if [ -d "zcoin" ]; then
   sudo monit stop all
   zcoin-cli stop
   rm -rv zcoin
 fi
 mkdir zcoin
-tar -xvf $f -C $HOME/zcoin --strip-components=1
+tar -xvf $ttt -C $HOME/zcoin --strip-components=1
 sudo cp $HOME/zcoin/bin/zcoind /usr/local/bin/zcoind
 sudo cp $HOME/zcoin/bin/zcoin-cli /usr/local/bin/zcoin-cli
 sudo cp $HOME/zcoin/bin/zcoin-tx /usr/local/bin/zcoin-tx
@@ -20,78 +17,83 @@ sudo cp $HOME/zcoin/bin/zcoin-tx /usr/local/bin/zcoin-tx
 
 if [[ $1 == "-s" ]]
 then
-	zcoin-cli znode status
-	zcoin-cli getinfo
-	zcoin-cli znsync status
-	exit
+zcoin-cli znode status
+zcoin-cli getinfo
+zcoin-cli znsync status
+exit
 fi
 
 if [[ $1 == "-u" ]]
 then
-  install_bins
-  print_status "Starting Zcoin daemon & Monit"
-  sleep 5
-  zcoind -daemon
-  sudo monit start all
-  exit
+filelink=$2
+install_bins
+echo "Finished Updating ....Starting Zcoin daemon & Monit"
+sleep 5
+zcoind -daemon
+sudo monit start all
+exit
 fi
 
 
 if [[ $1 == "-f" ]]
 then
-  echo "Before starting script ensure you have: "
-  echo "1000XZC sent to ZN address, It has to be in one single transaction!"
-  echo "ran 'znode genkey', and 'getaccountaddress ZNX'"
-  echo "Add the following info to the znode config file (znode.conf) "
-  echo "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
-  echo "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
-  echo "save your znode.conf. Restart your Zcoin wallet"
+echo "Before starting script ensure you have: "
+echo "1000XZC sent to ZN address, It has to be in one single transaction!"
+echo "ran 'znode genkey', and 'getaccountaddress ZNX'"
+echo "Add the following info to the znode config file (znode.conf) "
+echo "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
+echo "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
+echo "save your znode.conf. Restart your Zcoin wallet"
 
 #read -e -p "Server IP Address : " ip
-  UFW="Y"
-  install_fail2ban="Y"
-  install_monit="Y"
-  ip=$(hostname -I | awk {'print $1'})
-  read -e -p "Znode Private Key  : " key
-  read -e -p "Install Fail2ban? [Y/n] : " install_fail2ban
-  read -e -p "Install UFW and configure ports? [Y/n] : " UFW
-  read -e -p "Install MONIT to automaticaly keep you node alive? [Y/n] : " install_monit
-  echo "IP set to $ip"
-  pause
+UFW="Y"
+install_fail2ban="Y"
+install_monit="Y"
+filelink=$2
 
-  # Create swapfile if less then 4GB memory
-  totalmem=$(free -m | awk '/^Mem:/{print $2}')
-  totalswp=$(free -m | awk '/^Swap:/{print $2}')
-  totalm=$(($totalmem + $totalswp))
-  if [ $totalm -lt 4000 ]; then
-    print_status "Server memory is less then 4GB..."
-    if ! grep -q '/swapfile' /etc/fstab ; then
-      print_status "Creating a 4GB swapfile..."
-      sudo fallocate -l 4G /swapfile
-      sudo chmod 600 /swapfile
-      sudo mkswap /swapfile
-      sudo swapon /swapfile
-      echo '/swapfile none swap sw 0 0' | sudo tee --append /etc/fstab > /dev/null
-      sudo mount -a
-      print_status "Swap created"
-    fi
+ip=$(hostname -I | awk {'print $1'})
+read -e -p "Znode Private Key  : " key
+read -e -p "Install Fail2ban? [Y/n] : " install_fail2ban
+read -e -p "Install UFW and configure ports? [Y/n] : " UFW
+read -e -p "Install MONIT to automaticaly keep you node alive? [Y/n] : " install_monit
+echo "IP set to $ip"
+pause
+
+# Create swapfile if less then 4GB memory
+totalmem=$(free -m | awk '/^Mem:/{print $2}')
+totalswp=$(free -m | awk '/^Swap:/{print $2}')
+totalm=$(($totalmem + $totalswp))
+if [ $totalm -lt 4000 ]; then
+  echo "Server memory is less then 4GB..."
+  if ! grep -q '/swapfile' /etc/fstab ; then
+    echo "Creating a 4GB swapfile..."
+    sudo fallocate -l 4G /swapfile
+    sudo chmod 600 /swapfile
+    sudo mkswap /swapfile
+    sudo swapon /swapfile
+    echo '/swapfile none swap sw 0 0' | sudo tee --append /etc/fstab > /dev/null
+    sudo mount -a
+    echo "Swap created"
   fi
+fi
 
-  #Generating Random Passwords
-  rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+#Generating Random Passwords
+rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 
-  clear
+clear
 
-  echo "Updating system"
-  sleep 5
+echo "Updating Ubunto"
+sleep 5
 
-  # update package and upgrade Ubuntu
-  sudo apt-get update -y
-  sudo apt-get upgrade -y
+# update package and upgrade Ubuntu
+sudo apt-get update -y
+sudo apt-get upgrade -y
 
-  install_bins
+echo "installing Zcoin..."
+install_bins
 
+echo "preparing Zcoin config..."
 #znode config file
 mkdir $HOME/.zcoin
 cat <<EOF > $HOME/.zcoin/zcoin.conf
@@ -112,25 +114,17 @@ znodeprivkey=$key
 externalip=$ip:8168
 EOF
 
-clear
-echo "Starting zcoind"
-sleep 5
 
-zcoind -daemon
-
-clear
-
-
-if [ $install_fail2ban == "y" ] || [ $install_fail2ban == "Y" ]
+if [ "$install_fail2ban" = "y" ] || [ "$install_fail2ban" = "Y" ]
 then
-    print_status "installing f2b"
+    echo "installing f2b"
     sudo apt-get install fail2ban -y
     sudo service fail2ban restart
 fi
 
-if [ $UFW == "y" ] || [ $UFW == "Y" ]
+if [ "$UFW" = "y" ] || [ "$UFW" = "Y" ]
 then
-    print_status "installing UFW"
+    echo "installing UFW"
     sudo apt-get install ufw -y
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
@@ -139,9 +133,9 @@ then
     yes | sudo ufw enable
 fi
 
-if [ $install_monit == "y" ] || [ $install_monit == "Y" ]
+if [ "$install_monit" = "y" ] || [ "$install_monit" = "Y" ]
 then
-    print_status "installing and configuring MONIT"
+    echo "installing and configuring MONIT"
     sudo apt install monit
 
 #monit config for process to monitor
@@ -183,8 +177,12 @@ EOF
 	sudo monit start all
 fi
 
-fi
-clear
 
-print_status "Feeling appreciative & generous, show some love by sending Zcoins my way"
-print_status "aBJFCE2XaExDZAdd1vuek9GkFCNtmF7nao"
+echo "Starting zcoind"
+sleep 5
+
+zcoind -daemon
+fi
+
+echo "Feeling appreciative & generous, show some love by sending Zcoins my way"
+echo "aBJFCE2XaExDZAdd1vuek9GkFCNtmF7nao"
