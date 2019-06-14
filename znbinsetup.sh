@@ -3,13 +3,15 @@ install_bins(){
 
 filelink=$2
 wget $filelink
+f="$(basename -- $filelink)"
+
 if [ -d "zcoin" ]; then
   sudo monit stop all
   zcoin-cli stop
   rm -rv zcoin
 fi
 mkdir zcoin
-tar -xvf $1 -C $HOME/zcoin --strip-components=1
+tar -xvf $f -C $HOME/zcoin --strip-components=1
 sudo cp $HOME/zcoin/bin/zcoind /usr/local/bin/zcoind
 sudo cp $HOME/zcoin/bin/zcoin-cli /usr/local/bin/zcoin-cli
 sudo cp $HOME/zcoin/bin/zcoin-tx /usr/local/bin/zcoin-tx
