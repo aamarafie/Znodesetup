@@ -12,6 +12,7 @@ tar -xvf $ttt -C $HOME/zcoin --strip-components=1
 sudo cp $HOME/zcoin/bin/zcoind /usr/local/bin/zcoind
 sudo cp $HOME/zcoin/bin/zcoin-cli /usr/local/bin/zcoin-cli
 sudo cp $HOME/zcoin/bin/zcoin-tx /usr/local/bin/zcoin-tx
+rm $ttt
 }
 
 
