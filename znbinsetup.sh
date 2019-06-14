@@ -1,6 +1,8 @@
 #!/bin/bash
 install_bins(){
-wget https://github.com/zcoinofficial/zcoin/releases/download/$2
+
+filelink = "$2"
+wget $filelink
 if [ -d "zcoin" ]; then
   sudo monit stop all
   zcoin-cli stop
@@ -35,13 +37,13 @@ fi
 
 if [[ $1 == "-f" ]]
 then
-  print_status "Before starting script ensure you have: "
-  print_status "1000XZC sent to ZN address, It has to be in one single transaction!"
-  print_status "ran 'znode genkey', and 'getaccountaddress ZNX'"
-  print_status "Add the following info to the znode config file (znode.conf) "
-  print_status "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
-  print_status "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
-  print_status "save your znode.conf. Restart your Zcoin wallet"
+  echo "Before starting script ensure you have: "
+  echo "1000XZC sent to ZN address, It has to be in one single transaction!"
+  echo "ran 'znode genkey', and 'getaccountaddress ZNX'"
+  echo "Add the following info to the znode config file (znode.conf) "
+  echo "LABEL vpsIp:8168  ZNODEPRIVKEY TXID INDEX"
+  echo "EXAMPLE------>ZN1 51.52.53.54:8168  XrxSr3fXpX3dZcU7CoiFuFWqeHYw83 d6fd38868bb8f9958e34d5155437d00 1"
+  echo "save your znode.conf. Restart your Zcoin wallet"
 
 #read -e -p "Server IP Address : " ip
   UFW="Y"
@@ -79,7 +81,7 @@ then
 
   clear
 
-  print_status "Updating system"
+  echo "Updating system"
   sleep 5
 
   # update package and upgrade Ubuntu
@@ -109,7 +111,7 @@ externalip=$ip:8168
 EOF
 
 clear
-print_status "Starting zcoind"
+echo "Starting zcoind"
 sleep 5
 
 zcoind -daemon
@@ -143,9 +145,9 @@ then
 #monit config for process to monitor
 cat <<EOF | sudo tee /etc/monit/conf.d/zcoind.conf
 check process zcoind with pidfile $HOME/.zcoin/zcoind.pid
-start program = "$HOME/zcoin/src/zcoind -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
+start program = "$HOME/zcoin/bin/zcoind -conf=$HOME/.zcoin/zcoin.conf -datadir=$HOME/.zcoin/"
 as uid $USER and gid $USER
-stop program = "$HOME/zcoin/src/zcoin-cli stop"
+stop program = "$HOME/zcoin/bin/zcoin-cli stop"
 as uid $USER and gid $USER
 if failed port 8168 then restart
 if 5 restarts within 5 cycles then unmonitor
